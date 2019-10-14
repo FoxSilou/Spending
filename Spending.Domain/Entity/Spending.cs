@@ -19,25 +19,20 @@
 
         public static Spending BuildSpending(
             long? id = null, 
-            long? spenderId = null, 
-            string firstName = null, 
-            string lastName = null,
-            long? spenderCurrencyId = null,
-            string spenderCurrencyName = null,
+            Spender spender = null,
             DateTime? date = null, 
             SpendingNature nature = SpendingNature.Misc, 
-            double? amount = null, 
-            long? currencyId = null, 
-            string currencyName = null,
+            double? amount = null,
+            Currency currency = null,
             string comment = null)
         {
             return new Spending()
                 .SetId(id)
-                .SetSpender(spenderId: spenderId, firstName: firstName, lastName: lastName, currencyId: spenderCurrencyId, currencyName: spenderCurrencyName)
+                .SetSpender(spender)
                 .SetSpendingDate(date)
                 .SetNature(nature)
                 .SetAmount(amount)
-                .SetCurrency(currencyId: currencyId, currencyName: currencyName)
+                .SetCurrency(currency)
                 .SetComment(comment);
         }
 
@@ -47,15 +42,15 @@
             return this;
         }
 
-        public Spending SetSpender(long? spenderId = null, string firstName = null, string lastName = null, long? currencyId = null, string currencyName = null)
+        public Spending SetSpender(Spender spender = null)
         {
             if (Currency != null
-                && Currency.Id != currencyId)
+                && Currency.Id != spender?.Currency?.Id)
             {
                 throw new ValidationException("Spending.SetSpender: Spender is not valid");
             }
 
-            Spender = Spender.BuildSpender(id: spenderId, currencyId: currencyId, currencyName: currencyName, firstName: firstName, lastName: lastName);
+            Spender = spender;
             return this;
         }
 
@@ -77,15 +72,15 @@
             return this;
         }
 
-        public Spending SetCurrency(long? currencyId = null, string currencyName = null)
+        public Spending SetCurrency(Currency curency = null)
         {
             if (Spender != null 
-                && Spender.Currency.Id != currencyId)
+                && Spender.Currency.Id != curency?.Id)
             {
                 throw new ValidationException("Spending.SetCurrency: Currency is not valid");
             }
 
-            Currency = Currency.BuildCurrency(id: currencyId, name: currencyName);
+            Currency = curency;
             return this;
         }
 

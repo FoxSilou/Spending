@@ -1,17 +1,16 @@
 ﻿namespace Spending.Domain.Contracts
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface ISpendingRepository
     {
-        Models.SpendingDto Get(long? id);
+        Entity.Spending Get(long? id);
 
-        IDictionary<long, Domain.Models.SpendingDto> Get();
+        IList<Entity.Spending> Get();
 
-        IDictionary<long, Domain.Models.SpendingDto> GetFromSpender(long spenderId);
+        IList<Entity.Spending> GetFromSpender(long spenderId);
 
-        Task<Models.SpendingDto> Insert(Models.SpendingDto spendingToAdd);
+        Task<Entity.Spending> Insert(Entity.Spending spendingToAdd);
     }
 }

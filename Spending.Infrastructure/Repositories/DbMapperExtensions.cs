@@ -2,64 +2,69 @@
 {
     public static class DbMapperExtensions
     {
-        public static Domain.Models.SpendingDto ToModel(this Data.Spending spending)
+        public static Domain.Entity.Spending ToEntity(this Data.Spending spending)
         {
-            return new Domain.Models.SpendingDto
-            {
-                Id = spending.Id,
-                SpenderId = spending.SpenderId,
-                Date = spending.Date,
-                Nature = spending.Nature,
-                Amount = spending.Amount,
-                CurrencyId = spending.CurrencyId,
-                Comment = spending.Comment,
-            };
+            return Domain.Entity.Spending.BuildSpending(
+                id: spending.Id,
+                amount: spending.Amount,
+                comment: spending.Comment,
+                currency: Domain.Entity.Currency.BuildCurrency(
+                    id: spending.CurrencyId,
+                    name: spending.Currency?.Name),
+                spender: Domain.Entity.Spender.BuildSpender(
+                    id: spending.Spender?.Id,
+                    currency: Domain.Entity.Currency.BuildCurrency(
+                        id: spending.Spender?.CurrencyId,
+                        name: spending.Spender?.Currency?.Name),
+                    firstName: spending.Spender?.FirstName,
+                    lastName: spending.Spender?.LastName),
+                date: spending.Date?.Date,
+                nature: spending.Nature);
         }
 
-        public static Domain.Models.SpenderDto ToModel(this Data.Spender spender)
+        public static Domain.Entity.Spender ToEntity(this Data.Spender spender)
         {
-            return new Domain.Models.SpenderDto
-            {
-                Id = spender.Id,
-                FirstName = spender.FirstName,
-                LastName = spender.LastName,
-                CurrencyId = spender.CurrencyId,
-            };
+            return Domain.Entity.Spender.BuildSpender(
+                id: spender.Id,
+                currency: Domain.Entity.Currency.BuildCurrency(
+                    id: spender.CurrencyId, 
+                    name: spender.Currency?.Name),
+                firstName: spender.FirstName,
+                lastName: spender.LastName);
         }
-        public static Domain.Models.CurrencyDto ToModel(this Data.Currency currency)
+        public static Domain.Entity.Currency ToEntity(this Data.Currency currency)
         {
-            return new Domain.Models.CurrencyDto
-            {
-                Id = currency.Id,
-                Name = currency.Name,
-            };
+            return Domain.Entity.Currency.BuildCurrency(
+                id: currency.Id,
+                name: currency.Name);
         }
 
-        public static Data.Spending ToDb(this Domain.Models.SpendingDto spending)
+        public static Data.Spending ToDb(this Domain.Entity.Spending spending)
         {
             return new Data.Spending
             {
                 Id = spending.Id,
-                SpenderId = spending.SpenderId,
-                Date = spending.Date,
+                SpenderId = spending.Spender?.Id,
+                Date = spending.Date?.Date,
                 Nature = spending.Nature,
-                Amount = spending.Amount,
-                CurrencyId = spending.CurrencyId,
+                Amount = spending.Amount.Value,
+                CurrencyId = spending.Currency?.Id,
                 Comment = spending.Comment,
             };
         }
 
-        public static Data.Spender ToDb(this Domain.Models.SpenderDto spender)
+        public static Data.Spender ToDb(this Domain.Entity.Spender spender)
         {
             return new Data.Spender
             {
                 Id = spender.Id,
-                FirstName = spender.FirstName,
-                LastName = spender.LastName,
-                CurrencyId = spender.CurrencyId,
+                FirstName = spender?.Person?.FirstName,
+                LastName = spender?.Person?.LastName,
+                CurrencyId = spender?.Currency?.Id,
             };
         }
-        public static Data.Currency ToDb(this Domain.Models.CurrencyDto currency)
+
+        public static Data.Currency ToDb(this Domain.Entity.Currency currency)
         {
             return new Data.Currency
             {

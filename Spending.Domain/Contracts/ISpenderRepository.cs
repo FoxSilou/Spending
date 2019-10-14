@@ -4,8 +4,6 @@ namespace Spending.Domain.Contracts
 {
     public interface ISpenderRepository
     {
-        Models.SpenderDto Get(long? id);
-
-        IDictionary<long, Models.SpenderDto> Get();
+        Entity.Spender Get(long? id);
     }
 }

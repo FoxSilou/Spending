@@ -1,4 +1,4 @@
-﻿namespace Spending.Domain.ViewModels
+﻿namespace Spending.ViewModels
 {
     using Spending.Domain.Entity;
     using System;

@@ -27,11 +27,10 @@ namespace Spending.Domain.Entity
             Value = value;
             return this;
         }
-
-        // Note : les conditions d'égalité d'un montant ne sont pas très bien définies dans les specs, à revoir éventuellement
+        
         public bool IsEquals(Quantity quantityToCompare)
         {
-            return quantityToCompare.Value - 0.1 <= Value && Value <= quantityToCompare.Value + 0.1;
+            return quantityToCompare.Value  == Value;
         }
     }
 }

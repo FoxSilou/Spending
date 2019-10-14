@@ -9,8 +9,6 @@
         private readonly RequestDelegate _next;
 
         public SeedingMiddleware(RequestDelegate next)
-
-
         {
             _next = next;
         }

@@ -11,44 +11,31 @@
     {
         private static readonly Random _random = new Random();
 
-        public Models.SpendingDto SetupGet(Models.SpendingDto returnedSpending)
+        public Spending SetupGet(Spending returnedSpending)
         {
             Setup(x => x.Get(returnedSpending.Id)).Returns(returnedSpending);
 
             return returnedSpending;
         }
 
-        public void SetupGet(params Models.SpendingDto[] spendings)
+        public void SetupGet(long id, Spending spending)
         {
-            Setup(x => x.Get()).Returns(spendings.ToDictionary(sp => sp.Id.Value));
+            Setup(x => x.Get(id)).Returns(spending);
         }
 
-        public void SetupGetFromSpender(long spenderId, params Models.SpendingDto[] spendings)
+        public void SetupGet(params Spending[] spendings)
         {
-            Setup(x => x.GetFromSpender(spenderId)).Returns(spendings.ToDictionary(sp => sp.Id.Value));
+            Setup(x => x.Get()).Returns(spendings);
+        }
+
+        public void SetupGetFromSpender(long spenderId, params Spending[] spendings)
+        {
+            Setup(x => x.GetFromSpender(spenderId)).Returns(spendings);
         }
 
         public void SetupInsert()
         {
-            Setup(x => x.Insert(It.IsAny<Models.SpendingDto>())).ReturnsAsync((Models.SpendingDto sp) => sp);
-        }
-
-        public Models.SpendingDto GenerateSpendingDto(long? id = null, DateTime? date = null, long? spenderId = null, double? amount = null, long? currencyId = null)
-         {
-            var generatedSpending = new Models.SpendingDto
-            {
-                Id = id ?? _random.Next(),
-                SpenderId = spenderId ?? _random.Next(),
-                Date = date ?? DateTime.Now.AddDays(_random.Next(-3, 3)),
-                Nature = (SpendingNature) Enum.ToObject(typeof(SpendingNature), _random.Next(0, 2)),
-                Amount = amount ?? _random.Next(),
-                CurrencyId = currencyId ?? _random.Next(),
-                Comment = Guid.NewGuid().ToString(),
-            };
-
-            Setup(x => x.Get(generatedSpending.Id)).Returns(generatedSpending);
-
-            return generatedSpending;
+            Setup(x => x.Insert(It.IsAny<Spending>())).ReturnsAsync((Spending sp) => sp);
         }
     }
 }

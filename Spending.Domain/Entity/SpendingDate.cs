@@ -31,7 +31,7 @@
         // Note : les conditions d'égalité d'une date de dépense ne sont pas très bien définies dans les specs, à revoir éventuellement
         public bool IsEquals(SpendingDate spendingToCompare)
         {
-            return spendingToCompare.Date.Value.AddSeconds(-1) <= Date && Date <= spendingToCompare.Date.Value.AddSeconds(1);
+            return spendingToCompare.Date.Value.AddSeconds(-0.1) <= Date && Date <= spendingToCompare.Date.Value.AddSeconds(0.1);
         }
 
         public void ValidateNew(DateTime now)

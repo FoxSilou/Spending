@@ -14,13 +14,12 @@
             long? id = null,
             string lastName = null,
             string firstName = null,
-            long? currencyId = null, 
-            string currencyName = null)
+            Currency currency = null)
         {
             return new Spender()
                 .SetId(id)
                 .SetPerson(firstName: firstName, lastName: lastName)
-                .SetCurrency(currencyId: currencyId, currencyName: currencyName);
+                .SetCurrency(currency);
         }
 
         public Spender SetId(long? id = null)
@@ -35,9 +34,9 @@
             return this;
         }
 
-        public Spender SetCurrency(long? currencyId = null, string currencyName = null)
+        public Spender SetCurrency(Currency currency)
         {
-            Currency = Currency.BuildCurrency(id: currencyId, name: currencyName);
+            Currency = currency;
             return this;
         }
 

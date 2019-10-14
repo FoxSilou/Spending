@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spending.Domain.ViewModels
+namespace Spending.ViewModels
 {
     public class SpendingViewModel
     {

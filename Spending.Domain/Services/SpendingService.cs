@@ -44,10 +44,15 @@
             }
 
             IDictionary<long, Models.SpendingDto> spendings = _spendingRepository.GetFromSpender(spenderId);
-            IDictionary<long, Models.CurrencyDto> currencies = _currencyRepository.Get();
+            ISet<long> currencyIds = spendings.Values.Where(sp => sp.CurrencyId.HasValue).Select(sp => sp.CurrencyId.Value).ToHashSet();
+            IDictionary<long, Models.CurrencyDto> currencies = _currencyRepository.GetFromIds(currencyIds);
 
             foreach (Models.SpendingDto spending in spendings.Values)
             {
+                if (spending.CurrencyId.HasValue && !currencies.ContainsKey(spending.CurrencyId.Value))
+                {
+                    throw new NotFoundException("Currency not found");
+                }
                 yield return spending.ToViewModel(spender, spending.CurrencyId.HasValue ? currencies[spending.CurrencyId.Value] : null);
             }
         }

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20191007190058_InitialMigration.cs" />
+    <Compile Remove="Migrations\20191014200347_SetSomeFieldsToNotNull.cs" />
   </ItemGroup>
 
   <ItemGroup>

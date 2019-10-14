@@ -2,10 +2,10 @@
 {
     public class Spender
     {
-        public long? Id { get; set; }
+        public long Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public Currency Currency { get; set; }
-        public long? CurrencyId { get; set; }
+        public long CurrencyId { get; set; }
     }
 }

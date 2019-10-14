@@ -12,13 +12,13 @@
                     id: spending.CurrencyId,
                     name: spending.Currency?.Name),
                 spender: Domain.Entity.Spender.BuildSpender(
-                    id: spending.Spender?.Id,
+                    id: spending.SpenderId,
                     currency: Domain.Entity.Currency.BuildCurrency(
                         id: spending.Spender?.CurrencyId,
                         name: spending.Spender?.Currency?.Name),
                     firstName: spending.Spender?.FirstName,
                     lastName: spending.Spender?.LastName),
-                date: spending.Date?.Date,
+                date: spending.Date,
                 nature: spending.Nature);
         }
 
@@ -43,12 +43,11 @@
         {
             return new Data.Spending
             {
-                Id = spending.Id,
-                SpenderId = spending.Spender?.Id,
-                Date = spending.Date?.Date,
+                SpenderId = spending.Spender.Id.Value,
+                Date = spending.Date.Date.Value,
                 Nature = spending.Nature,
-                Amount = spending.Amount.Value,
-                CurrencyId = spending.Currency?.Id,
+                Amount = spending.Amount.Value.Value,
+                CurrencyId = spending.Currency.Id.Value,
                 Comment = spending.Comment,
             };
         }
@@ -57,10 +56,9 @@
         {
             return new Data.Spender
             {
-                Id = spender.Id,
-                FirstName = spender?.Person?.FirstName,
-                LastName = spender?.Person?.LastName,
-                CurrencyId = spender?.Currency?.Id,
+                FirstName = spender.Person.FirstName,
+                LastName = spender.Person?.LastName,
+                CurrencyId = spender.Currency.Id.Value,
             };
         }
 
@@ -68,7 +66,6 @@
         {
             return new Data.Currency
             {
-                Id = currency.Id,
                 Name = currency.Name,
             };
         }

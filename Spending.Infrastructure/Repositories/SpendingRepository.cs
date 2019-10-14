@@ -44,7 +44,8 @@
 
         public async Task<Domain.Entity.Spending> Insert(Domain.Entity.Spending spendingToAdd)
         {
-            EntityEntry<Spending> result = await _applicationDbContext.Spendings.AddAsync(spendingToAdd.ToDb());
+            Spending dBSpending = spendingToAdd.ToDb();
+            EntityEntry<Spending> result = await _applicationDbContext.Spendings.AddAsync(dBSpending);
             await _applicationDbContext.SaveChangesAsync();
 
             return result.Entity.ToEntity();

@@ -62,7 +62,6 @@
         [HttpPost("~/api/spendings")]
         public async Task<ActionResult<SpendingViewModel>> Post([FromBody] CreateSpendingViewModel createViewModel)
         {
-            
             Domain.Entity.Currency currency = _currencyRepository.Get(createViewModel.CurrencyId);
             if (currency == null)
             {

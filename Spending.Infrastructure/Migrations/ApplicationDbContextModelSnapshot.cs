@@ -56,7 +56,7 @@ namespace Spending.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
+                    b.Property<decimal>("Amount");
 
                     b.Property<string>("Comment")
                         .IsRequired();

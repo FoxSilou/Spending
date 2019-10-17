@@ -1,6 +1,7 @@
 ﻿namespace Spending.Domain.Tests
 {
     using Spending.Domain.Entity;
+    using Spending.Domain.Enum;
     using System;
 
     public static class TestHelpers

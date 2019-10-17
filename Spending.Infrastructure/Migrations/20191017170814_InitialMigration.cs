@@ -29,7 +29,7 @@ namespace Spending.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LastName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    CurrencyId = table.Column<long>(nullable: true)
+                    CurrencyId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,12 +48,12 @@ namespace Spending.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SpenderId = table.Column<long>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: true),
+                    SpenderId = table.Column<long>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     Nature = table.Column<int>(nullable: false),
-                    Amount = table.Column<double>(nullable: true),
-                    CurrencyId = table.Column<long>(nullable: true),
-                    Comment = table.Column<string>(nullable: true)
+                    Amount = table.Column<decimal>(nullable: false),
+                    CurrencyId = table.Column<long>(nullable: false),
+                    Comment = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

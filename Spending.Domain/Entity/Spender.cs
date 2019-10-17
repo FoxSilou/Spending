@@ -1,4 +1,6 @@
-﻿namespace Spending.Domain.Entity
+﻿using Spending.Domain.ValueObject;
+
+namespace Spending.Domain.Entity
 {
     public class Spender
     {
@@ -30,7 +32,7 @@
 
         public Spender SetPerson(string firstName = null, string lastName = null)
         {
-            Person = Person.BuildPerson(firstName: firstName, lastName: lastName);
+            Person = new Person(firstName: firstName, lastName: lastName);
             return this;
         }
 

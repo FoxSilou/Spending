@@ -35,18 +35,14 @@ namespace Spending
             services.AddScoped<ICurrencyRepository, CurrencyRepository>();
             services.AddScoped<ISpendingService, SpendingService>();
 
-            services.AddScoped<ApplicationDbContextSeeding>();
-
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseMiddleware<MigrationMiddleware>();
-            app.UseMiddleware<SeedingMiddleware>();
-
             app.UseDefaultFiles().UseStaticFiles();
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMvc();
         }
     }

@@ -1,23 +1,13 @@
-﻿namespace Spending.Domain.Entity
+﻿namespace Spending.Domain.ValueObject
 {
     using global::Spending.Domain.Exceptions;
     using System;
 
-    public class SpendingDate
+    public struct SpendingDate
     {
         public DateTime? Date { get; private set; }
 
-        private SpendingDate()
-        {
-        }
-
-        public static SpendingDate BuildSpendingDate(
-            DateTime? value = null)
-        {
-            return new SpendingDate().SetValue(value);
-        }
-
-        public SpendingDate SetValue(DateTime? value = null)
+        public SpendingDate(DateTime? value = null)
         {
             if (!value.HasValue)
             {
@@ -25,7 +15,6 @@
             }
 
             Date = value.Value;
-            return this;
         }
 
         // Note : les conditions d'égalité d'une date de dépense ne sont pas très bien définies dans les specs, à revoir éventuellement

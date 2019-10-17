@@ -2,11 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Migrations\20191007190058_InitialMigration.cs" />
+    <Compile Remove="Migrations\20191008193816_InitialMigration.cs" />
     <Compile Remove="Migrations\20191014200347_SetSomeFieldsToNotNull.cs" />
+    <Compile Remove="Migrations\20191014200818_SetSomeFieldsToNotNull.cs" />
   </ItemGroup>
 
   <ItemGroup>

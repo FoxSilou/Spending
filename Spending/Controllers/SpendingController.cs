@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Spending.Domain.Contracts;
     using Spending.Domain.Exceptions;
+    using Spending.Middlewares;
     using Spending.ViewModels;
     using System.Collections.Generic;
     using System.Linq;
@@ -74,25 +75,18 @@
                 return NotFound("Spender not found");
             }
 
-            try
-            {
-                Domain.Entity.Spending spendingToCreate = Domain.Entity.Spending.BuildSpending(
-                    amount: createViewModel.Amount,
-                    comment: createViewModel.Comment,
-                    currency: currency,
-                    spender: spender,
-                    date: createViewModel.Date?.Date,
-                    nature: createViewModel.Nature);
+            Domain.Entity.Spending spendingToCreate = Domain.Entity.Spending.BuildSpending(
+                amount: createViewModel.Amount,
+                comment: createViewModel.Comment,
+                currency: currency,
+                spender: spender,
+                date: createViewModel.Date?.Date,
+                nature: createViewModel.Nature);
 
-                _spendingService.ValidateNewSpending(spendingToCreate);
+            _spendingService.ValidateNewSpending(spendingToCreate);
 
-                Domain.Entity.Spending insertedSpending = await _spendingRepository.Insert(spendingToCreate);
-                return CreatedAtAction(nameof(Get), new { insertedSpending.Id }, insertedSpending);
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(e.Message);
-            }
+            Domain.Entity.Spending insertedSpending = await _spendingRepository.Insert(spendingToCreate);
+            return CreatedAtAction(nameof(Get), new { insertedSpending.Id }, insertedSpending.ToViewModel());
         }
     }
 }

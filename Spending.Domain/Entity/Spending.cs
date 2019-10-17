@@ -1,6 +1,8 @@
 ﻿namespace Spending.Domain.Entity
 {
+    using global::Spending.Domain.Enum;
     using global::Spending.Domain.Exceptions;
+    using global::Spending.Domain.ValueObject;
     using System;
 
     public class Spending
@@ -21,8 +23,8 @@
             long? id = null, 
             Spender spender = null,
             DateTime? date = null, 
-            SpendingNature nature = SpendingNature.Misc, 
-            double? amount = null,
+            SpendingNature nature = SpendingNature.Misc,
+            decimal? amount = null,
             Currency currency = null,
             string comment = null)
         {
@@ -56,7 +58,7 @@
 
         public Spending SetSpendingDate(DateTime? date = null)
         {
-            Date = SpendingDate.BuildSpendingDate(date);
+            Date = new SpendingDate(date);
             return this;
         }
 
@@ -66,9 +68,9 @@
             return this;
         }
 
-        public Spending SetAmount(double? amount = null)
+        public Spending SetAmount(decimal? amount = null)
         {
-            Amount = Quantity.BuildQuantity(amount);
+            Amount = new Quantity(amount);
             return this;
         }
 

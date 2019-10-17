@@ -9,7 +9,7 @@ using Spending.Infrastructure.Data;
 namespace Spending.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191008193816_InitialMigration")]
+    [Migration("20191017170814_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace Spending.Infrastructure.Migrations
 
             modelBuilder.Entity("Spending.Infrastructure.Data.Currency", b =>
                 {
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -35,11 +35,11 @@ namespace Spending.Infrastructure.Migrations
 
             modelBuilder.Entity("Spending.Infrastructure.Data.Spender", b =>
                 {
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CurrencyId");
+                    b.Property<long>("CurrencyId");
 
                     b.Property<string>("FirstName");
 
@@ -54,21 +54,22 @@ namespace Spending.Infrastructure.Migrations
 
             modelBuilder.Entity("Spending.Infrastructure.Data.Spending", b =>
                 {
-                    b.Property<long?>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double?>("Amount");
+                    b.Property<decimal>("Amount");
 
-                    b.Property<string>("Comment");
+                    b.Property<string>("Comment")
+                        .IsRequired();
 
-                    b.Property<long?>("CurrencyId");
+                    b.Property<long>("CurrencyId");
 
-                    b.Property<DateTime?>("Date");
+                    b.Property<DateTime>("Date");
 
                     b.Property<int>("Nature");
 
-                    b.Property<long?>("SpenderId");
+                    b.Property<long>("SpenderId");
 
                     b.HasKey("Id");
 

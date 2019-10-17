@@ -1,24 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spending.Infrastructure.Data
 {
-    public class ApplicationDbContextSeeding
+    public static class ApplicationDbContextSeeding
     {
-        private readonly Func<ApplicationDbContext> _applicationDbContextFactory;
-
-        public ApplicationDbContextSeeding(Func<ApplicationDbContext> applicationDbContextFactory)
+        public static async Task EnsureSeedData(this ApplicationDbContext context)
         {
-            _applicationDbContextFactory = applicationDbContextFactory;
-        }
-
-        public async Task EnsureSeedData()
-        {
-            using (var applicationDbContext = _applicationDbContextFactory())
+            using (context)
             {
-                using (var transaction = await applicationDbContext.Database.BeginTransactionAsync())
+                using (var transaction = await context.Database.BeginTransactionAsync())
                 {
                     bool hasChanged = false;
 
@@ -28,10 +22,10 @@ namespace Spending.Infrastructure.Data
                         new Currency { Name = "Rouble russe" },
                     };
 
-                    var missingCurrencies = currencies.Where(x => !applicationDbContext.Currencies.Any(y => y.Name == x.Name)).ToArray();
+                    var missingCurrencies = currencies.Where(x => !context.Currencies.Any(y => y.Name == x.Name)).ToArray();
                     if (missingCurrencies.Any())
                     {
-                        applicationDbContext.Currencies.AddRange(missingCurrencies);
+                        context.Currencies.AddRange(missingCurrencies);
                         hasChanged = true;
                     }
 
@@ -44,16 +38,16 @@ namespace Spending.Infrastructure.Data
                         new Spender { FirstName = "Natasha", LastName = "Romanova", Currency = rouble },
                     };
 
-                    var missingSpenders = spenders.Where(x => !applicationDbContext.Spenders.Any(y => y.FirstName == x.FirstName && y.LastName == x.LastName)).ToArray();
+                    var missingSpenders = spenders.Where(x => !context.Spenders.Any(y => y.FirstName == x.FirstName && y.LastName == x.LastName)).ToArray();
                     if (missingSpenders.Any())
                     {
-                        applicationDbContext.Spenders.AddRange(missingSpenders);
+                        context.Spenders.AddRange(missingSpenders);
                         hasChanged = true;
                     }
 
                     if (hasChanged)
                     {
-                        await applicationDbContext.SaveChangesAsync();
+                        await context.SaveChangesAsync();
                         transaction.Commit();
                     }
                 }

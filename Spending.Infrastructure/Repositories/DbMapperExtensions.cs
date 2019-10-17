@@ -57,7 +57,7 @@
             return new Data.Spender
             {
                 FirstName = spender.Person.FirstName,
-                LastName = spender.Person?.LastName,
+                LastName = spender.Person.LastName,
                 CurrencyId = spender.Currency.Id.Value,
             };
         }

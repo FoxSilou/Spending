@@ -1,7 +1,5 @@
 ﻿namespace Spending.Domain.Entity
 {
-    using System;
-
     public class Currency
     {
         public long? Id { get; private set; }

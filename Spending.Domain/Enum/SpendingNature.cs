@@ -1,4 +1,4 @@
-﻿namespace Spending.Domain.Entity
+﻿namespace Spending.Domain.Enum
 {
     public enum SpendingNature
     {
